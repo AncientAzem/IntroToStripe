@@ -9,10 +9,16 @@ namespace StripeDemo.Services
     {
         public StripeList<Product> GetAllProducts()
         {
-            var productService = new ProductService();
-            StripeList<Product> products = productService.List();
-            Console.Write(products);
-            return products;
+            return new ProductService().List();
+        }
+
+        public StripeList<Price> GetPriceForProduct(Product item)
+        {
+            var options = new PriceListOptions()
+            {
+                Product = item.Id
+            };
+            return new PriceService().List(options);
         }
     }
 }

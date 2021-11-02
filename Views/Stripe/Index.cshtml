@@ -1,4 +1,5 @@
-﻿@{
+﻿@model List<ProductData>
+@{
     ViewData["Title"] = "Stripe";
 }
 
@@ -7,6 +8,23 @@
     <p>Time to learn some stripe stuffs!</p>
 </div>
 
+<div class="container">
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="card" style="width: 18rem; margin: 1em;">
+                <img class="card-img-top" src="@product.ImageUrl" alt="@product.Name">
+                <div class="card-body">
+                    <h5 class="card-title">@product.Name</h5>
+                    <p class="card-text">Price: @(product.PrimaryPriceValue != null ? $"${(decimal)product.PrimaryPriceValue / 100}" : "Unknown")</p>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+<h4>Raw Product JSON</h4>
 <pre>
     @ViewData["products-json"]
 </pre>
