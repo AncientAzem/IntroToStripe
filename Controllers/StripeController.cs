@@ -44,7 +44,7 @@ namespace StripeDemo.Controllers
                 LineItems = _stripe.GenerateSessionLineItems(isSubscription),
                 PaymentMethodTypes = new List<string>() { "card" },
                 Mode = isSubscription ? "subscription" : "payment",
-                SuccessUrl = "https://google.com/",
+                SuccessUrl = "https://localhost:5001/Stripe",
                 CancelUrl = "https://localhost:5001/Stripe"
             };
 
