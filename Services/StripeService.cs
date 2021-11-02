@@ -26,7 +26,7 @@ namespace StripeDemo.Services
         public List<SessionLineItemOptions> GenerateSessionLineItems(bool onlySubscriptions = false)
         {
             var sessionCart = new List<SessionLineItemOptions>();
-            // Get Data from Stripe
+
             var products = GetAllProducts();
             var productDataList = new List<ProductData>();
             foreach (var product in products)
@@ -83,6 +83,29 @@ namespace StripeDemo.Services
             }
 
             return sessionCart;
+        }
+
+        public void AddItemsToUpcomingInvoice(string customerId)
+        {
+            var products = GetAllProducts();
+            var service = new InvoiceItemService();
+            foreach (var product in products)
+            {
+                var price = GetPriceForProduct(product).FirstOrDefault();
+                if (price is not null && price.Type == "one_time")
+                {
+                    service.Create(new InvoiceItemCreateOptions()
+                    {
+                        Customer = customerId,
+                        Price = price.Id,
+                    });
+                    service.Create(new InvoiceItemCreateOptions()
+                    {
+                        Customer = customerId,
+                        Price = price.Id,
+                    });
+                }
+            }
         }
     }
 }

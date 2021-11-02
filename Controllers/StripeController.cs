@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Stripe;
@@ -49,6 +50,22 @@ namespace StripeDemo.Controllers
 
             Session session = new SessionService().Create(sessionOptions);
             Response.Headers.Add("Location", session.Url);
+            return new StatusCodeResult(303);
+        }
+
+        public IActionResult GenerateInvoice()
+        {
+            _stripe.AddItemsToUpcomingInvoice("cus_KWGX5yztwuPVL1");
+            var invoiceOptions = new InvoiceCreateOptions()
+            {
+                Customer = "cus_KWGX5yztwuPVL1",
+                CollectionMethod = "send_invoice",
+                DaysUntilDue = 7,
+            };
+            var service = new InvoiceService();
+            var invoice = service.Create(invoiceOptions);
+            invoice = service.FinalizeInvoice(invoice.Id);
+            Response.Headers.Add("Location", invoice.HostedInvoiceUrl);
             return new StatusCodeResult(303);
         }
     }
