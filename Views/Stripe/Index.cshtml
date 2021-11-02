@@ -1,4 +1,5 @@
-﻿@model List<ProductData>
+﻿@using StripeDemo.Controllers
+@model List<ProductData>
 @{
     ViewData["Title"] = "Stripe";
 }
@@ -21,10 +22,14 @@
             </div>
         }
     </div>
+    <div class="text-center">
+        <a href="@Url.Action("StartCheckout", "Stripe")" class="btn btn-primary">Add Products to Cart</a>
+        <a href="@Url.Action("StartCheckout", "Stripe")?isSubscription=true" class="btn btn-primary">Add Subscriptions to Cart</a>
+    </div>
+    <div class="row">
+        <h4>Raw Product JSON</h4>
+        <pre>
+            @ViewData["products-json"]
+        </pre>
+    </div>
 </div>
-
-
-<h4>Raw Product JSON</h4>
-<pre>
-    @ViewData["products-json"]
-</pre>

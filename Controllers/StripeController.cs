@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Stripe;
+using Stripe.Checkout;
 using StripeDemo.Models;
 using StripeDemo.Services;
 
@@ -9,7 +11,7 @@ namespace StripeDemo.Controllers
     public class StripeController : Controller
     {
         private StripeService _stripe = new StripeService();
-        
+
         // GET
         public IActionResult Index()
         {
@@ -33,11 +35,79 @@ namespace StripeDemo.Controllers
             ViewData["products-json"] = products.ToJson();
             return View(productDataList);
         }
-
-        [HttpPost]
-        public IActionResult StartCheckout()
+        
+        
+        public IActionResult StartCheckout(bool isSubscription = false)
         {
-            return null;
+            var sessionCart = new List<SessionLineItemOptions>();
+            // Get Data from Stripe
+            var products = _stripe.GetAllProducts();
+            var productDataList = new List<ProductData>();
+            foreach (var product in products)
+            {
+                var price = _stripe.GetPriceForProduct(product).FirstOrDefault();
+                productDataList.Add(new ProductData()
+                {
+                    Id = product.Id,
+                    PrimaryPriceId = price?.Id,
+                    PrimaryPriceValue = price?.UnitAmount,
+                    Type = price?.Type ?? "one_time",
+                    Name = product.Name,
+                    ImageUrl = product.Images.First()
+                });
+            }
+            
+            if (isSubscription)
+            {
+                foreach (var product in productDataList.Where(p => p.Type == "recurring"))
+                {
+                    sessionCart.Add(new SessionLineItemOptions()
+                    {
+                        Price = product.PrimaryPriceId,
+                        Quantity = 1
+                    });
+                }
+            }
+            else
+            {
+                foreach (var product in productDataList.Where(p => p.Type == "one_time"))
+                {
+                    if (product.PrimaryPriceId is not null)
+                    {
+                        sessionCart.Add(new SessionLineItemOptions()
+                        {
+                            Price = product.PrimaryPriceId,
+                            Quantity = 1
+                        });
+                    }
+                    else
+                    {
+                        sessionCart.Add(new SessionLineItemOptions()
+                        {
+                            Quantity = 1,
+                            PriceData = new SessionLineItemPriceDataOptions()
+                            {
+                                Currency = "USD",
+                                Product = product.Id,
+                                UnitAmount = 1000
+                            }
+                        });
+                    }
+                }
+            }
+
+            var sessionOptions = new SessionCreateOptions()
+            {
+                LineItems = sessionCart,
+                PaymentMethodTypes = new List<string>() { "card" },
+                Mode = isSubscription ? "subscription" : "payment",
+                SuccessUrl = "https://google.com/",
+                CancelUrl = "https://localhost:5001/Stripe"
+            };
+
+            Session session = new SessionService().Create(sessionOptions);
+            Response.Headers.Add("Location", session.Url);
+            return new StatusCodeResult(303);
         }
     }
 }
