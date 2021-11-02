@@ -36,69 +36,11 @@ namespace StripeDemo.Controllers
             return View(productDataList);
         }
         
-        
         public IActionResult StartCheckout(bool isSubscription = false)
         {
-            var sessionCart = new List<SessionLineItemOptions>();
-            // Get Data from Stripe
-            var products = _stripe.GetAllProducts();
-            var productDataList = new List<ProductData>();
-            foreach (var product in products)
-            {
-                var price = _stripe.GetPriceForProduct(product).FirstOrDefault();
-                productDataList.Add(new ProductData()
-                {
-                    Id = product.Id,
-                    PrimaryPriceId = price?.Id,
-                    PrimaryPriceValue = price?.UnitAmount,
-                    Type = price?.Type ?? "one_time",
-                    Name = product.Name,
-                    ImageUrl = product.Images.First()
-                });
-            }
-            
-            if (isSubscription)
-            {
-                foreach (var product in productDataList.Where(p => p.Type == "recurring"))
-                {
-                    sessionCart.Add(new SessionLineItemOptions()
-                    {
-                        Price = product.PrimaryPriceId,
-                        Quantity = 1
-                    });
-                }
-            }
-            else
-            {
-                foreach (var product in productDataList.Where(p => p.Type == "one_time"))
-                {
-                    if (product.PrimaryPriceId is not null)
-                    {
-                        sessionCart.Add(new SessionLineItemOptions()
-                        {
-                            Price = product.PrimaryPriceId,
-                            Quantity = 1
-                        });
-                    }
-                    else
-                    {
-                        sessionCart.Add(new SessionLineItemOptions()
-                        {
-                            Quantity = 1,
-                            PriceData = new SessionLineItemPriceDataOptions()
-                            {
-                                Currency = "USD",
-                                Product = product.Id,
-                                UnitAmount = 1000
-                            }
-                        });
-                    }
-                }
-            }
-
             var sessionOptions = new SessionCreateOptions()
             {
-                LineItems = sessionCart,
+                LineItems = _stripe.GenerateSessionLineItems(isSubscription),
                 PaymentMethodTypes = new List<string>() { "card" },
                 Mode = isSubscription ? "subscription" : "payment",
                 SuccessUrl = "https://google.com/",
