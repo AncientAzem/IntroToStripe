@@ -1,6 +1,12 @@
 # IntroToStripe
 
-To start the project and auto-rebuild on file changes, run the following command:
+In order to build this project, you will need to add the following environemnt variables to the `launchSettings.json`:
+```
+"STRIPE_PK": "pk_test_<your-publishable-key>",
+"STRIPE_SK": "sk_test_<your-secret-key>"
+```
+
+To run the project and auto-rebuild on file changes, run the following command:
 ```
 dotnet watch run
 ```
