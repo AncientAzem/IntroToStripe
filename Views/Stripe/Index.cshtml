@@ -1,4 +1,5 @@
 ﻿@using StripeDemo.Controllers
+@using Microsoft.AspNetCore.Http.Extensions
 @model List<ProductData>
 @{
     ViewData["Title"] = "Stripe";
@@ -23,8 +24,8 @@
         }
     </div>
     <div class="text-center">
-        <a href="@Url.Action("StartCheckout", "Stripe")" class="btn btn-primary">Add Products to Cart</a>
-        <a href="@Url.Action("StartCheckout", "Stripe")?isSubscription=true" class="btn btn-primary">Add Subscriptions to Cart</a>
+        <a href="@Url.Action("StartCheckout", "Stripe")?returnUrl=@Context.Request.GetEncodedUrl()" class="btn btn-primary">Add Products to Cart</a>
+        <a href="@Url.Action("StartCheckout", "Stripe")?returnUrl=@Context.Request.GetEncodedUrl()&isSubscription=true" class="btn btn-primary">Add Subscriptions to Cart</a>
         <a href="@Url.Action("GenerateInvoice", "Stripe")" class="btn btn-primary">Generate Product Invoice</a>
     </div>
     <div class="row">

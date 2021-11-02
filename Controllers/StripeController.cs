@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Stripe;
 using Stripe.Checkout;
@@ -37,16 +38,17 @@ namespace StripeDemo.Controllers
             return View(productDataList);
         }
         
-        public IActionResult StartCheckout(bool isSubscription = false)
+        public IActionResult StartCheckout(string returnUrl, bool isSubscription = false)
         {
             var sessionOptions = new SessionCreateOptions()
             {
                 LineItems = _stripe.GenerateSessionLineItems(isSubscription),
                 PaymentMethodTypes = new List<string>() { "card" },
                 Mode = isSubscription ? "subscription" : "payment",
-                SuccessUrl = "https://localhost:5001/Stripe",
-                CancelUrl = "https://localhost:5001/Stripe"
+                SuccessUrl = returnUrl,
+                CancelUrl = returnUrl
             };
+            ;
 
             Session session = new SessionService().Create(sessionOptions);
             Response.Headers.Add("Location", session.Url);
