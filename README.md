@@ -15,3 +15,9 @@ To tunnel the application to the internet for a live demo, run the following:
 ```
 ssh -R 80:localhost:5000 localhost.run
 ```
+
+To generate the presentation from markdown:
+```
+npm install -g @marp-team/marp-cli
+marp .\Presentation.md -o index.html
+```
