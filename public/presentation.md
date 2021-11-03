@@ -18,6 +18,20 @@ backgroundImage: url('./background2.png')
 Start accepting online payments today!
 
 ---
+
+#
+
+![bg left:30% 70%](./headshot.png)
+
+# Who am I?
+
+Hey there! My name is Brenden Reeves and I'm a Fullstack Developer here locally.
+
+I specialize in API and Frontend Web Dev using Firebase's tooling for authentication, database hosting, and cloud messaging.
+
+
+---
+
 #
 
 # What is Stripe?
