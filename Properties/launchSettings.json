@@ -15,7 +15,9 @@
       "launchBrowser": true,
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "STRIPE_PK": "pk_test_51J0p43JTpDsOAD70S5VVFs22cTFNnYGaiDhjdbZFJ1iW5axHHWGHRiifpyZT7gu4YnXOaRPK1sYVt2MrYQgVw8NZ00kbO1X4ji",
+        "STRIPE_SK": "sk_test_51J0p43JTpDsOAD70AuOgVKN6MGnzODYu0SL5d4REjQoU0r66dVQGotSV9XsNLTewW9SAYCm5OC22cEynMhUQXpiP00MvTA7YGZ"
       }
     }
   }
