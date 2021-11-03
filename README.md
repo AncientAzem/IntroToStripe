@@ -19,5 +19,5 @@ ssh -R 80:localhost:5000 localhost.run
 To generate the presentation from markdown:
 ```
 npm install -g @marp-team/marp-cli
-marp Presentation.md -o public/index.html
+marp public/Presentation.md -o public/index.html
 ```
