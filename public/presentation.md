@@ -38,7 +38,7 @@ I specialize in API and Frontend Web Dev using Firebase's tooling for authentica
 
 Stripe is a payment infrastructure that allows developers and business alike to easily start accepting payments for services that takes the burden of security and processing off of the back of the business and developers.
 
-Used by companies ranging from Google, Slack, Shopify, Lyft Instacart and more!
+Used by companies ranging from Google, Slack, Shopify, Lyft, Instacart and more!
 
 ---
 #

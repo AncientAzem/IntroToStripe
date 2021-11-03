@@ -18,7 +18,11 @@
                 <img class="card-img-top" src="@product.ImageUrl" alt="@product.Name">
                 <div class="card-body">
                     <h5 class="card-title">@product.Name</h5>
-                    <p class="card-text">Price: @(product.PrimaryPriceValue != null ? $"${(decimal)product.PrimaryPriceValue / 100}" : "Unknown")</p>
+                    <p class="card-text">
+                        Price: @(product.PrimaryPriceValue != null 
+                                   ? $"${(decimal)product.PrimaryPriceValue / 100}" 
+                                   : "Unknown")
+                    </p>
                 </div>
             </div>
         }

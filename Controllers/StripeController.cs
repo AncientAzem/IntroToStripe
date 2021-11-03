@@ -48,7 +48,6 @@ namespace StripeDemo.Controllers
                 SuccessUrl = returnUrl,
                 CancelUrl = returnUrl
             };
-            ;
 
             Session session = new SessionService().Create(sessionOptions);
             Response.Headers.Add("Location", session.Url);
