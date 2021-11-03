@@ -8,10 +8,10 @@ style: |
   }
 paginate: true
 backgroundColor: #fff
-backgroundImage: url('./wwwroot/background2.png')
+backgroundImage: url('./background2.png')
 ---
 
-![bg](./wwwroot/background.png)
+![bg](./background.png)
 
 # Introduction to Stripe
 

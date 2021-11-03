@@ -1,0 +1,11 @@
+{
+  "hosting": {
+    "site": "stripe-intro-presentation",
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
