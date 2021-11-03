@@ -38,7 +38,8 @@ Used by companies ranging from Google, Slack, Shopify, Lyft Instacart and more!
 - Fraud Protection (Radar)
 - 3rd/Multi Party Payment Platform (Connect)
 - Identity Verification (Identity)
-- LLC or C Corp. Startup Management Program (Atlas)
+- Startup Management Program (Atlas)
+<!-- Atlas: Allows you to form a LLC or C Corporation with ease -->
 
 ---
 #
