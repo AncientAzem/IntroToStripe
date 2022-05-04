@@ -26,6 +26,8 @@ namespace StripeDemo
         {
             var mvc = services.AddControllersWithViews();
             mvc.AddRazorRuntimeCompilation();
+            
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -58,6 +60,9 @@ namespace StripeDemo
                     name: "stripe",
                     pattern: "stripe/{action=Index}/{id?}");
             });
+            
+            app.UseSwagger();
+            app.UseSwaggerUI();
         }
     }
 }

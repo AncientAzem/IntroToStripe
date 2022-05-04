@@ -1,19 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using Stripe;
 using Stripe.Checkout;
 using StripeDemo.Models;
 
 namespace StripeDemo.Services
 {
-    public class StripeService
+    [AllowAnonymous]
+    [ApiController]
+    [Route("api/[controller]/[action]")]
+    public class StripeService : ControllerBase
     {
+        [HttpGet]
         public StripeList<Product> GetAllProducts()
         {
             return new ProductService().List();
         }
 
+        [HttpGet]
         public StripeList<Price> GetPriceForProduct(Product item)
         {
             var options = new PriceListOptions()
@@ -23,6 +30,7 @@ namespace StripeDemo.Services
             return new PriceService().List(options);
         }
 
+        [HttpGet]
         public List<SessionLineItemOptions> GenerateSessionLineItems(bool onlySubscriptions = false)
         {
             var sessionCart = new List<SessionLineItemOptions>();
@@ -85,6 +93,7 @@ namespace StripeDemo.Services
             return sessionCart;
         }
 
+        [HttpPost]
         public void AddItemsToUpcomingInvoice(string customerId)
         {
             var products = GetAllProducts();
@@ -106,6 +115,43 @@ namespace StripeDemo.Services
                     });
                 }
             }
+        }
+
+        [HttpGet]
+        public string CreateNewConnectAccount(string emailAddress)
+        {
+            var accountService = new AccountService();
+            var stripeAccount = accountService.Create(new AccountCreateOptions()
+            {
+                Type = "express",
+                Country = "US",
+                Email = emailAddress,
+                Capabilities = new AccountCapabilitiesOptions
+                {
+                    CardPayments = new AccountCapabilitiesCardPaymentsOptions
+                    {
+                        Requested = true,
+                    },
+                    Transfers = new AccountCapabilitiesTransfersOptions
+                    {
+                        Requested = true,
+                    },
+                },
+            });
+
+            return new AccountLinkService().Create(new AccountLinkCreateOptions()
+            {
+                Account = stripeAccount.Id,
+                RefreshUrl = HttpContext.Request.GetDisplayUrl(),
+                ReturnUrl = HttpContext.Request.GetDisplayUrl(),
+                Type = "account_onboarding"
+            }).Url;
+        }
+
+        [HttpGet]
+        public string GetAccountManagementLink(string connectUserId)
+        {
+            return new LoginLinkService().Create(connectUserId).Url;
         }
     }
 }

@@ -11,7 +11,7 @@ To run the project and auto-rebuild on file changes, run the following command:
 dotnet watch run
 ```
 
-While I am giving this talk, it can be accessed at https://stripe.demo.azem.xyz/. Should the presentation (can be seen at https://stripe-intro-presentation.web.app) be over and you want to run this locally to a public URL, you can create a tunnel using the following command:
+While I am giving this talk live, the demo can be accessed at http://stripe.demo.azem.xyz/. Should the presentation be over and you want to run this locally to a public URL, you can create a tunnel using the following command:
 ```
 ssh -R 80:localhost:5000 localhost.run
 ```

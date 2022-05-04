@@ -1,8 +1,92 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using StripeDemo.Controllers
+@using Microsoft.AspNetCore.Http.Extensions
+@model List<ProductData>
+@{
+    ViewData["Title"] = "Stripe";
+}
+@{
+    ViewData["Title"] = "Intro to Stripe";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1>@ViewData["Title"]</h1>
+    <p>Time to learn some stripe stuffs!</p>
+    
+    @if (ViewData["connectRedirect"].Equals(true))
+    {
+        <div class="d-flex mt-5 justify-content-center">
+            <div class="card text-white bg-success mb-3" style="max-width: 22rem;">
+                <div class="card-header">Congrats!!!</div>
+                <div class="card-body">
+                    <p class="card-text">
+                        Nicely done! You have successfully created yourself a stripe connect account. You can now 
+                        manage the account using the links below.
+                    </p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="container">
+    <div class="row">
+        @foreach (var product in Model)
+        {
+            <div class="card" style="width: 18rem; margin: 1em;">
+                <img class="card-img-top" src="@product.ImageUrl" alt="@product.Name">
+                <div class="card-body">
+                    <h5 class="card-title">@product.Name</h5>
+                    <p class="card-text">
+                        Price: @(product.PrimaryPriceValue != null 
+                                   ? $"${(decimal)product.PrimaryPriceValue / 100}" 
+                                   : "Unknown")
+                    </p>
+                </div>
+            </div>
+        }
+    </div>
+    
+   <div class="accordion" id="accordion">
+       <div class="card">
+           <div class="card-header" id="actionsHeader">
+                <h5 class="mb-0">
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#actions" aria-expanded="false" aria-controls="actions">
+                    Demo Actions
+                    </button>
+                </h5>
+            </div>
+            <div id="actions" class="collapse show" aria-labelledby="actionsHeader" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <h5>Pay Platform (100% Profit)</h5>
+                            <a href="@Url.Action("StartCheckout", "Home")?returnUrl=@Context.Request.GetEncodedUrl()" class="btn btn-primary">Add All Products to Cart</a>
+                            <a href="@Url.Action("StartCheckout", "Home")?returnUrl=@Context.Request.GetEncodedUrl()&isSubscription=true" class="btn btn-primary">Add Subscription to Cart</a>
+                            <a href="@Url.Action("GenerateInvoice", "Home")" class="btn btn-primary">Generate Product Invoice</a>
+                            <br><br>
+                            <h5>Split Profits between Platform and Connect Account (30/70)</h5>
+                            <a href="@Url.Action("StartCheckout", "Home")?returnUrl=@Context.Request.GetEncodedUrl()" class="btn btn-primary">Add All Products to Cart</a>
+                            <a href="@Url.Action("GenerateInvoice", "Home")?forConnectAccount=true" class="btn btn-primary">Generate Invoice On Behalf of Connect Account</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+       </div>
+       <div class="card">
+           <div class="card-header" id="rawJSONHeader">
+             <h5 class="mb-0">
+               <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#rawJSON" aria-expanded="false" aria-controls="rawJSON">
+                 Raw Product JSON
+               </button>
+             </h5>
+           </div>
+           <div id="rawJSON" class="collapse" aria-labelledby="rawJSONHeader" data-parent="#accordion">
+               <div class="card-body">
+                   <div class="card-body">
+                      <pre>@ViewData["products-json"]</pre>
+                  </div>
+               </div>
+           </div>
+         </div>
+   </div>
 </div>
