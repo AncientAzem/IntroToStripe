@@ -139,11 +139,12 @@ namespace StripeDemo.Services
                 },
             });
 
-            return new AccountLinkService().Create(new AccountLinkCreateOptions()
+            var linkService = new AccountLinkService();
+            return linkService.Create(new AccountLinkCreateOptions()
             {
                 Account = stripeAccount.Id,
-                RefreshUrl = HttpContext.Request.GetDisplayUrl(),
-                ReturnUrl = HttpContext.Request.GetDisplayUrl(),
+                RefreshUrl = "https://localhost:5001",
+                ReturnUrl = "https://localhost:5001",
                 Type = "account_onboarding"
             }).Url;
         }

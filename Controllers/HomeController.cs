@@ -97,6 +97,20 @@ namespace StripeDemo.Controllers
             return new StatusCodeResult(303);
         }
 
+        public IActionResult CreateNewConnectAccount()
+        {
+            var newAccountUrl = _stripe.CreateNewConnectAccount("1223@example.com");
+            Response.Headers.Add("Location", newAccountUrl);
+            return new StatusCodeResult(303);
+        }
+        
+        public IActionResult LoginToConnectAccount()
+        {
+            var newAccountUrl = _stripe.GetAccountManagementLink("acct_1KvosXQWS9VMSEWG");
+            Response.Headers.Add("Location", newAccountUrl);
+            return new StatusCodeResult(303);
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -64,6 +64,10 @@
                             <a href="@Url.Action("StartCheckout", "Home")?returnUrl=@Context.Request.GetEncodedUrl()&isSubscription=true" class="btn btn-primary">Add Subscription to Cart</a>
                             <a href="@Url.Action("GenerateInvoice", "Home")" class="btn btn-primary">Generate Product Invoice</a>
                             <br><br>
+                            <h5>Stripe Connect Setup</h5>
+                            <a href="@Url.Action("CreateNewConnectAccount", "Home")" class="btn btn-primary">Create Account</a>
+                            <a href="@Url.Action("LoginToConnectAccount", "Home")" class="btn btn-primary">Login to Dashboard</a>
+                            <br><br>
                             <h5>Split Profits between Platform and Connect Account (30/70)</h5>
                             <a href="@Url.Action("StartCheckout", "Home")?returnUrl=@Context.Request.GetEncodedUrl()" class="btn btn-primary">Add All Products to Cart</a>
                             <a href="@Url.Action("GenerateInvoice", "Home")?forConnectAccount=true" class="btn btn-primary">Generate Invoice On Behalf of Connect Account</a>
