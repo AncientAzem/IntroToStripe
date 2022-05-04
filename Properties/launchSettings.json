@@ -16,8 +16,8 @@
       "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "STRIPE_PK": "pk_test_51J0p43JTpDsOAD70S5VVFs22cTFNnYGaiDhjdbZFJ1iW5axHHWGHRiifpyZT7gu4YnXOaRPK1sYVt2MrYQgVw8NZ00kbO1X4ji",
-        "STRIPE_SK": "sk_test_51J0p43JTpDsOAD70AuOgVKN6MGnzODYu0SL5d4REjQoU0r66dVQGotSV9XsNLTewW9SAYCm5OC22cEynMhUQXpiP00MvTA7YGZ"
+        "STRIPE_PK": "pk_test_51JrqoYHCeZtPXPz8lb2kKn0KHk7bRACTyHdOED4Xi36jtkHqVgngBPM0l5aZqJYjkPXOpeBaACGRZnph0nq9Deyi00bqiESJHv",
+        "STRIPE_SK": "sk_test_51JrqoYHCeZtPXPz8J05TSs66TR9mu9HU2k2Insjittoe001v7yWT595nd12NMjmgDaysEzzRK7rlX1DGc4JWsZPD00NRiWiXJo"
       }
     }
   }

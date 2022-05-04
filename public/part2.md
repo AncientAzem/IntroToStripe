@@ -25,9 +25,9 @@ Start accepting online payments today!
 
 # Who am I?
 
-Hey there! My name is Brenden Reeves and I'm a Fullstack Developer here locally.
+Hey there! My name is Colin Lowel and I'm a Fullstack Developer here locally.
 
-I specialize in API and Frontend Web Dev using Firebase's tooling for authentication, database hosting, and cloud messaging.
+I specialize in .NET Web API and Front-end Web Development using Firebase's tooling for authentication, database hosting, and cloud messaging.
 
 
 ---
@@ -92,9 +92,20 @@ Card Auto Update: Allows stripe to automatically update the billing card data fo
 
 #
 
-# What I'll Be Covering
+# What We Covered Last Time
 
 - Basic Payment Processing
 - Product Management
 - Invoice Generation
 - Stripe API Usage
+
+---
+
+#
+
+# What We'll Be Doing Tonight
+
+- Reviewing the code from my previous talk
+- Answering Questions about Stripe and Stripe Connect
+- Registering Platforms with Connect
+- Allowing Platforms to take a cut from sales
